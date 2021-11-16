@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -116,7 +117,7 @@ public class RestauranteController {
 
             dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
                 Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
-                field.setAccessible(true);
+                Objects.requireNonNull(field).setAccessible(true);
 
                 Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
 
@@ -127,5 +128,4 @@ public class RestauranteController {
             throw new HttpMessageNotReadableException(e.getMessage(), rootCause, serverHttpRequest);
         }
     }
-
 }
